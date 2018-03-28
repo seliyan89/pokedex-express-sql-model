@@ -42,7 +42,14 @@ module.exports = (dbPool) => {
     },
 
     login: (user, callback) => {
-      // TODO: Add logic here
+      const queryString='select * from users where name=$1';
+      const values = [user.name];
+      dbPool.query(queryString,values,(error,queryResult)=>{
+        let hash=queryResult.rows[0].password;
+        bcrypt.compare(user.password, hash, function(err, res) {
+          callback(err,res);
+        });
+      });
     }
   };
 };

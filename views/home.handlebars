@@ -9,5 +9,10 @@
   {{#each pokemon}}
     <li>{{this.name}}</li>
   {{/each}}
+  {{#if loggedIn }}
+	  <form method="POST" action='/users/logout'>
+	  	<input type="submit" value="logout">
+	  </form>
+  {{/if}}
 </body>
 </html>

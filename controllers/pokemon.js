@@ -21,13 +21,19 @@ const get = (db) => {
 
 const updateForm = (db) => {
   return (request, response) => {
-    // TODO: Add logic here
-  };
+    db.pokemon.get(request.params.id,(err,queryResult)=>{
+    let context={pokemon:queryResult.rows[0]}
+    response.render('pokemon/edit',context);
+  });
+ };
 };
 
 const update = (db) => {
   return (request, response) => {
     // TODO: Add logic here
+    db.pokemon.update(request.body,(error,queryResult)=>{
+      response.send('Updated');
+    })
   };
 };
 

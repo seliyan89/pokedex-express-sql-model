@@ -45,10 +45,16 @@ const loginForm = (request, response) => {
   response.render('user/login');
 };
 
-const login = (request, response) => {
-  // TODO: Add logic here
-  // Hint: All SQL queries should happen in the corresponding model file
-  // ie. in models/user.js - which method should this controller call on the model?
+const login = (db) =>{
+  return (request,response)=> {
+    db.user.login(request.body,(err,res)=>{
+      if(res){
+        response.redirect('/');
+      }else{
+        response.send('Incorrect PW');
+      }
+    })
+  } 
 };
 
 /**

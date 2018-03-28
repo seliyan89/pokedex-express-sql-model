@@ -59,7 +59,13 @@ const login = (db) =>{
 
 const userDisplay = (db) =>{
   return (request,response)=>{
-    db.user
+    db.user.get(request.params.id,(dbError,dbResponse)=>{
+      let context = {
+        pokemon: dbResponse.rows,
+        user: dbResponse.rows[0].name
+      };
+      response.render('user/user',context);
+    });
   }
 };
 
@@ -73,5 +79,6 @@ module.exports = {
   create,
   logout,
   loginForm,
-  login
+  login,
+  userDisplay
 };

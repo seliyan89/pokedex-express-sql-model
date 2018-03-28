@@ -5,17 +5,11 @@
   <title>User profile</title>
 </head>
 <body>
+  Pokemons that {{user}} owns:
   <ul class="user-list">
-    <li class="user-attribute">
-      id: {{user.id}}
-    </li>
-    <li class="user-attribute">
-      name: {{user.name}}
-    </li>
-    <li class="user-attribute">
-      email: {{user.email}}
-    </li>
+    {{#each pokemon}}
+    <li>Pokemon: {{this.pokemon_name}}</li>
+    {{/each}}
   </ul>
-  
 </body>
 </html>

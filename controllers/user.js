@@ -57,6 +57,12 @@ const login = (db) =>{
   } 
 };
 
+const userDisplay = (db) =>{
+  return (request,response)=>{
+    db.user
+  }
+};
+
 /**
  * ===========================================
  * Export controller functions as a module

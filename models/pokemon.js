@@ -20,9 +20,10 @@ module.exports = (dbPool) => {
 
       // execute query
       dbPool.query(queryString, values, (err, queryResult) => {
-        // invoke callback function with results after query has executed
+  
         callback(err, queryResult);
       });
+
     },
 
     get: (id, callback) => {
@@ -30,6 +31,24 @@ module.exports = (dbPool) => {
       dbPool.query('SELECT * from pokemons WHERE id=$1', values, (error, queryResult) => {
         callback(error, queryResult);
       });
+    },
+
+    userPokemonsUpdate: (pokemon,user,callback)=>{
+      let queryString="select * from pokemons where num=$1";
+      let values =[pokemon.num];
+      dbPool.query(queryString,values,(err,queryResult)=>{
+        let pokemonId=queryResult.rows[0].id;
+        queryString="select * from users where name=$1";
+        values=[user];
+        dbPool.query(queryString,values,(err,queryResult)=>{
+          let userId=queryResult.rows[0].id;
+          queryString = "insert into user_pokemons (pokemon_id,user_id) values($1,$2)"
+          values= [pokemonId,userId];
+          dbPool.query(queryString,values,(error,queryResult)=>{
+            callback(error,queryResult);
+          })
+        })
+      })
     },
 
     update: (pokemon,callback)=>{

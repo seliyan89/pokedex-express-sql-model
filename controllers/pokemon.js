@@ -44,6 +44,8 @@ const createForm = (request, response) => {
 const create = (db) => {
   return (request, response) => {
     // use pokemon model method `create` to create new pokemon entry in db
+    let pokemonid=null;
+
     db.pokemon.create(request.body, (error, queryResult) => {
       // queryResult of creation is not useful to us, so we ignore it
       // (console log it to see for yourself)
@@ -56,10 +58,15 @@ const create = (db) => {
 
       if (queryResult.rowCount >= 1) {
         console.log('Pokemon created successfully');
+        db.pokemon.userPokemonsUpdate(request.body,request.cookies['username'],(error,queryResult)=>{
+          if(error){
+            console.log("update error",error);
+          }
+          console.log('updated user_pokemons table');
+        })
       } else {
         console.log('Pokemon could not be created');
       }
-
       // redirect to home page after creation
       response.redirect('/');
     });
